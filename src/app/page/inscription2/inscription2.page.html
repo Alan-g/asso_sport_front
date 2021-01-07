@@ -1,0 +1,107 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Inscription <ion-label>étape 2/4</ion-label></ion-title>
+    <ion-progress-bar  value="0.25"></ion-progress-bar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card id="inscription">
+    <ion-card-header>
+      <ion-card-header>Information inscription</ion-card-header>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form class="list-form" [formGroup]="formInscription" (ngSubmit)="validate()">
+
+        <ion-item class="animated fadeInUp">
+          <ion-label position="floating">
+            <ion-icon name="calendar"></ion-icon>
+            Année
+          </ion-label>
+          <ion-select placeholder="" value="{{getValue()}}" color="generale" formControlName="annee">
+            <ion-select-option *ngFor="let annee of annees" value="{{annee.libelle}}">{{annee.libelle}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-label>Attestation CE Envoyée</ion-label>
+          <ion-checkbox slot="end" formControlName="comite_entreprise"></ion-checkbox>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-datetime formControlName="date_envoi_ce" [max]="max" [min]="min" display-format="DD-MM-YYYY" placeholder="Sélectionner la date d'envoi de l'attestation CE"></ion-datetime>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-label>Règlement intérieur</ion-label>
+          <ion-checkbox slot="end" formControlName="reglement_interieur"></ion-checkbox>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-label>Règlement Financier</ion-label>
+          <ion-checkbox slot="end" formControlName="reglement"></ion-checkbox>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-label><ion-icon name="medkit"></ion-icon> Questionnaire de santé</ion-label>
+          <ion-select placeholder="" color="generale" (ionChange)="onSelect($event)" formControlName="questionnaire_sante">
+            <ion-select-option value="Négatif">Négatif</ion-select-option>
+            <ion-select-option value="Positif">Positif</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp" id="certificatM" style="display: none">
+          <ion-label>Certificat Médical</ion-label>
+          <ion-checkbox slot="end" formControlName="certificat"></ion-checkbox>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-label>Envelopper</ion-label>
+          <ion-checkbox slot="end" formControlName="enveloppe"></ion-checkbox>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-label>Autorisation Parentale</ion-label>
+          <ion-checkbox slot="end" formControlName="autorisation_parental"></ion-checkbox>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-label>Carte M'RA</ion-label>
+          <ion-checkbox slot="end" formControlName="cart_mra"></ion-checkbox>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-label>Essai</ion-label>
+          <ion-checkbox slot="end" formControlName="essai"></ion-checkbox>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-label position="floating">
+            <ion-icon name="pricetag"></ion-icon>
+            Commentaire Inscription
+          </ion-label>
+          <ion-input type="text" formControlName="commentaire"
+                     color="generale"></ion-input>
+        </ion-item>
+      </form>
+
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button  fill="outline" color="primary" (click)="previous()">Précédent</ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button  fill="outline" color="primary" (click)="validate()" [disabled]="!formInscription.valid">Valider</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

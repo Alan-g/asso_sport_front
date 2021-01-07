@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title *ngIf="coursId">Mise à jour Cours</ion-title>
+    <ion-title *ngIf="!coursId">Création Cours</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="danger" (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+    </ion-card-header>
+    <ion-card-content>
+      <form class="list-form" [formGroup]="formCours" (ngSubmit)="validate()">
+        <ion-item class="animated fadeInUp">
+          <ion-label position="floating">Type de cours:</ion-label>
+          <ion-select [interfaceOptions]="customActionSheetOptions" placeholder="Selectionner un type de cours" formControlName="typeCours">
+            <ion-select-option *ngFor="let typeCour of typeCours" value="{{typeCour.id}}">{{typeCour.libelle}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-label position="floating">Professeur:</ion-label>
+        <ion-select placeholder="Selectionner un professeur" formControlName="professeur">
+          <ion-select-option *ngFor="let prof of professeur" value="{{prof.id}}">{{prof.nom.toUpperCase()}} {{prof.prenom}}</ion-select-option>
+        </ion-select>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-label position="floating">Jour:</ion-label>
+        <ion-select placeholder="Selectionner un jour" formControlName="jour">
+          <ion-select-option value="Lundi">Lundi</ion-select-option>
+          <ion-select-option value="Mardi">Mardi</ion-select-option>
+          <ion-select-option value="Mercredi">Mercredi</ion-select-option>
+          <ion-select-option value="Jeudi">Jeudi</ion-select-option>
+          <ion-select-option value="Vendredi">Vendredi</ion-select-option>
+          <ion-select-option value="Samedi">Samedi</ion-select-option>
+          <ion-select-option value="Dimanche">Dimanche</ion-select-option>
+        </ion-select>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-label position="floating">Heure de début:</ion-label>
+          <ion-input type="time" formControlName="heureDebut"
+                     color="generale"></ion-input>
+        </ion-item>
+        <ion-item class="animated fadeInUp">
+          <ion-label position="floating">Heure de fin:</ion-label>
+          <ion-input type="time" formControlName="heureFin"
+                     color="generale"></ion-input>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-label position="floating">Salle:</ion-label>
+          <ion-select [interfaceOptions]="customActionSheetOptions" placeholder="Selectionner un type de cours" formControlName="salle" (ionChange)="onSelectSalle()">
+            <ion-select-option *ngFor="let salle of salles" value="{{salle.id}}">{{salle.libelle}} - Capacité: {{salle.capacite}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-label position="floating">Limite:</ion-label>
+          <ion-input type="number" formControlName="limite"
+                     color="generale"></ion-input>
+        </ion-item>
+        <div class="ion-padding">
+          <ion-button *ngIf="!coursId" expand="block" fill="outline" (click)="validate()" [disabled]="!formCours.valid" >Ajouter</ion-button>
+          <ion-button *ngIf="coursId" expand="block" fill="outline" (click)="validate()" [disabled]="!formCours.valid" >Modifier</ion-button>
+        </div>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

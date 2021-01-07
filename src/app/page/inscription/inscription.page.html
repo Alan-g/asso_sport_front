@@ -1,0 +1,146 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Inscription <ion-label>étape 1/4</ion-label></ion-title>
+    <ion-progress-bar  value="0"></ion-progress-bar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid id="first_option">
+    <ion-row class="ion-align-self-center" style="padding-top: 30vh;">
+      <ion-col offset="5" size="2" style="text-align: center">
+        <ion-label>Vous voulez inscrire :</ion-label>
+        <ion-button color="primary" fill="outline" (click)="addAdherent(true)">Un nouvel adhérent</ion-button>
+        <br>
+        ou
+        <br>
+        <ion-button color="primary" fill="outline" (click)="addAdherent(false)">Un ancien adhérent</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-card id="adherent" style="display: none">
+    <ion-card-header>
+      <ion-segment id="segment" value="new" (ionChange)="openSearchModal($event)">
+        <ion-segment-button value="new">
+          <ion-label>nouvel adhérent</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="old">
+          <ion-label>ancien adhérent</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form class="list-form" [formGroup]="formAdherent" (ngSubmit)="validate()">
+        <ion-item class="animated fadeInUp">
+          <ion-label><ion-icon name="body"></ion-icon> Selectionner un genre</ion-label>
+          <ion-select placeholder="Genre" color="generale" formControlName="genre">
+            <ion-select-option value="MR">MR</ion-select-option>
+            <ion-select-option value="MME">MME</ion-select-option>
+            <ion-select-option value="Enfant">Enfant</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-label position="floating">
+            <ion-icon name="person"></ion-icon>
+            Nom
+          </ion-label>
+          <ion-input type="text" formControlName="nom"
+                     color="generale"></ion-input>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-label position="floating">
+            <ion-icon name="person"></ion-icon>
+            Prénom
+          </ion-label>
+          <ion-input type="text" formControlName="prenom"
+                     color="generale"></ion-input>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-label position="floating">
+            <ion-icon name="calendar"></ion-icon>
+            Date de naissance
+          </ion-label>
+          <ion-datetime formControlName="dateNaissance" display-format="DD-MM-YYYY" placeholder="Select Date"></ion-datetime>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-label position="floating">
+            <ion-icon name="phone-portrait"></ion-icon>
+            Téléphone
+          </ion-label>
+          <ion-input type="tel" formControlName="telephone"
+                     color="generale"></ion-input>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-label position="floating">
+            <ion-icon name="mail"></ion-icon>
+            Mail
+          </ion-label>
+          <ion-input type="mail" formControlName="mail"
+                     color="generale"></ion-input>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-label position="floating">
+            <ion-icon name="location"></ion-icon>
+            Adresse 1
+          </ion-label>
+          <ion-input type="text" formControlName="adresse1"
+                     color="generale"></ion-input>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-label position="floating">
+            <ion-icon name="location"></ion-icon>
+            Adresse 2
+          </ion-label>
+          <ion-input type="text" formControlName="adresse2"
+                     color="generale"></ion-input>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-label position="floating">
+            <ion-icon name="location"></ion-icon>
+            Adresse 3
+          </ion-label>
+          <ion-input type="text" formControlName="adresse3"
+                     color="generale"></ion-input>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-label position="floating">
+            <ion-icon name="locate"></ion-icon>
+          Code Postal
+          </ion-label>
+          <ion-input type="text" formControlName="codePostal"
+                     color="generale"></ion-input>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-label position="floating">
+            <ion-icon name="navigate"></ion-icon>
+            Commune
+          </ion-label>
+          <ion-input type="text" formControlName="commune"
+                     color="generale"></ion-input>
+        </ion-item>
+
+        <div class="ion-padding">
+          <ion-button expand="block" fill="outline" (click)="validate()" [disabled]="!formAdherent.valid" >Valider</ion-button>
+        </div>
+
+      </form>
+
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

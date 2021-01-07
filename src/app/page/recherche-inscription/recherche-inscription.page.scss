@@ -1,0 +1,14 @@
+ion-col {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+ion-col {
+  padding: 15px;
+  text-align: center;
+}
+.ripple-parent {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}

@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Inscription <ion-label>étape 4/4</ion-label></ion-title>
+    <ion-progress-bar  value="0.75"></ion-progress-bar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid id="paiement_question">
+    <ion-row class="ion-align-self-center" style="padding-top: 30vh;">
+      <ion-col offset="5" size="2" style="text-align: center">
+        <ion-label>Voulez vous ajouter des paiements ?</ion-label>
+        <br><ion-button color="primary" fill="outline" (click)="addPaiement()">Oui</ion-button> <ion-button color="primary" fill="outline" (click)="skip()">Non</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-card id="paiement" style="display: none">
+    <ion-card-header>
+      <div class="ion-padding">
+        <ion-button fill="outline" color="primary" (click)="openSearchModal()" >Rechercher paiement existant</ion-button>
+      </div>
+      <form class="list-form" [formGroup]="formPaiement" (ngSubmit)="add()">
+
+        <ion-item class="animated fadeInUp">
+          <ion-label position="floating">
+            <ion-icon name="person"></ion-icon>
+            Nom Payeur
+          </ion-label>
+          <ion-input type="text" formControlName="payeurs"
+                     color="generale"></ion-input>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-label position="floating">
+            <ion-icon name="business"></ion-icon>
+            Banque
+          </ion-label>
+          <ion-input type="text" formControlName="banque"
+                     color="generale"></ion-input>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-label position="floating">
+            <ion-icon name="pricetag"></ion-icon>
+            Montant
+          </ion-label>
+          <ion-input type="number" formControlName="montant"
+                     color="generale"></ion-input>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-datetime formControlName="dateEncaissement" [max]="max" [min]="min" display-format="DD-MM-YYYY" placeholder="Sélectionner la date d'encaissement"></ion-datetime>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-label position="floating">
+            <ion-icon name="card"></ion-icon>
+            Numéros chéque
+          </ion-label>
+          <ion-input type="text" formControlName="numeroCheque"
+                     color="generale"></ion-input>
+        </ion-item>
+        <div class="ion-padding">
+          <ion-button expand="block" fill="outline" color="success" (click)="add()" [disabled]="!formPaiement.valid" >Ajouter</ion-button>
+        </div>
+      </form>
+    </ion-card-header>
+
+    <ion-card-content style="text-align: center">
+      <ion-label *ngIf="paiements.length === 0">Aucun paiement</ion-label>
+      <ion-label *ngIf="paiements.length !== 0">Paiement</ion-label>
+      <ion-list *ngFor="let paiement of paiements; let i = index">
+        <ion-item>{{i+1}} : {{paiement.nom_payeur}} -  {{paiement.banque}} - {{paiement.montant}}€ - {{this.datepipe.transform(paiement.dateEncaissement, 'dd/MM/yyyy')}} -  {{paiement.numeroCheque}}
+        <ion-button slot="end" color="danger" (click)="remove(paiement)">
+          <ion-icon name="close"></ion-icon>
+        </ion-button>
+        </ion-item>
+      </ion-list>
+  </ion-card-content>
+  </ion-card>
+
+</ion-content>
+
+<ion-footer id="footer_p" style="display: none">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button  fill="outline" color="primary" (click)="previous()">Précédent</ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button  fill="outline" color="primary" (click)="skip()">Suivant</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

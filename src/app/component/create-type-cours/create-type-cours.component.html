@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title *ngIf="typeCourId">Mise à jour type de cours</ion-title>
+    <ion-title *ngIf="!typeCourId">Création d'un type de cours</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="danger" (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+    </ion-card-header>
+    <ion-card-content>
+      <form class="list-form" [formGroup]="formTypeCours" (ngSubmit)="validate()">
+        <ion-item class="animated fadeInUp">
+          <ion-label position="floating">Libelle:</ion-label>
+          <ion-input type="text" formControlName="libelle"
+                     color="generale"></ion-input>
+        </ion-item>
+
+        <div class="ion-padding">
+          <ion-button *ngIf="!typeCourId" expand="block" fill="outline" (click)="validate()" [disabled]="!formTypeCours.valid" >Ajouter</ion-button>
+          <ion-button *ngIf="typeCourId" expand="block" fill="outline" (click)="validate()" [disabled]="!formTypeCours.valid" >Modifier</ion-button>
+        </div>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

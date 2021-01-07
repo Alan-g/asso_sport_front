@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Tarif Cours</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Montant par nombre de cours :</ion-card-title>
+      <ion-toolbar>
+      <ion-button slot="end" size="small" color="success" fill="outline" (click)="add()">Ajouter</ion-button>
+      <ion-button slot="end" size="small" color="danger" fill="outline" (click)="delete()">Supprimer</ion-button>
+      </ion-toolbar>
+    </ion-card-header>
+    <ion-card-content style="text-align: center;">
+      <table style="width:20%;margin-left:40vh;">
+        <tr>
+          <th>Cours</th>
+          <th>Montant (€)</th>
+        </tr>
+        <tr *ngFor="let montantCour of montantCours">
+          <td>{{montantCour.nombre}}</td>
+          <td><ion-input type="number" min="0" (ionChange)="update(montantCour.id,montantCour.montant, this.$event)" [(ngModel)]="montantCour.montant" ></ion-input></td>
+        </tr>
+      </table>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

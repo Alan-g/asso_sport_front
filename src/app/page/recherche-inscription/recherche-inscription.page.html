@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Recherche Adhérent Inscrit</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-select style="max-width: 200px" (ionChange)="onSelectOther()" placeholder="Selectionner une année" [(ngModel)]="anneeSelect" color="generale">
+        <ion-select-option *ngFor="let annee of annees" value="{{annee.libelle}}">{{annee.libelle}}</ion-select-option>
+      </ion-select>
+      <ion-toolbar>
+        <ion-searchbar [(ngModel)]="name" style="padding-bottom: 0;" mode="ios" search-icon="search-sharp" showCancelButton="always" placeholder="Nom Prénom" (ionChange)="search($event)"></ion-searchbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="addFiltre()">
+            <ion-icon name="funnel"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+      <ion-chip outline color="primary" *ngFor="let filtre of filtres">
+        <ion-label *ngIf="filtre.filtre !== 'cours'">{{convert(filtre.filtre)}} = {{filtre.valeur}}</ion-label>
+        <ion-label *ngIf="filtre.filtre === 'cours'">{{convert(filtre.filtre)}}: {{affichageCours(filtre.valeur)}}</ion-label>
+        <ion-icon name="close-circle" (click)="delete(filtre)"></ion-icon>
+      </ion-chip>
+    </ion-card-header>
+
+    <ion-card-content *ngIf="load" style="text-align: center">
+      <ion-label >
+        Recherche en cours
+      </ion-label>
+      <ion-progress-bar type="indeterminate"></ion-progress-bar>
+    </ion-card-content>
+
+    <ion-card-content *ngIf="!load" style="text-align: center">
+      <ion-label *ngIf="adherents.length === 0 && load === false"> Aucune résultat</ion-label>
+
+      <ion-row *ngIf="adherents.length !== 0">
+        <ion-col size="1">Genre</ion-col>
+        <ion-col size="2">Nom</ion-col>
+        <ion-col size="2">Prénom</ion-col>
+        <ion-col size="2">Commune</ion-col>
+        <ion-col size="3">Mail</ion-col>
+        <ion-col size="2">Téléphone</ion-col>
+      </ion-row>
+      <ion-row *ngFor="let adherent of adherents" (click)="click(adherent.id)" class="ion-activatable ripple-parent">
+        <ion-ripple-effect></ion-ripple-effect>
+        <ion-col size="1">{{adherent.genre}}</ion-col>
+        <ion-col size="2">{{adherent.nom}}</ion-col>
+        <ion-col size="2">{{adherent.prenom}}</ion-col>
+        <ion-col size="2">{{adherent.commune}}</ion-col>
+        <ion-col size="3">{{adherent.mail}}</ion-col>
+        <ion-col size="2">{{adherent.telephone}}</ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

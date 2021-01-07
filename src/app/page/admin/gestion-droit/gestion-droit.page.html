@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Gestion des droits</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <table style="width:100%">
+    <tr>
+      <th>Droit\Role</th>
+      <th *ngFor="let role of roles">{{role.libelle}}</th>
+    </tr>
+    <tr *ngFor="let droit of droits">
+      <td><ion-label class="tooltip">{{droit.libelle}} <span class="tooltiptext">{{droit.description}}</span></ion-label></td>
+      <td *ngFor="let role of roles"><ion-toggle *ngIf="haveDroit(role, droit.id)" checked="true" (ionChange)="updateDroit($event, role.id, droit.id)"></ion-toggle><ion-toggle *ngIf="!haveDroit(role, droit.id)"  checked="false" (ionChange)="updateDroit($event, role.id, droit.id)"></ion-toggle></td>
+    </tr>
+  </table>
+</ion-content>

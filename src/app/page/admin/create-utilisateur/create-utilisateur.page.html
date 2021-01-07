@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Création Utilisateur</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card id="creation">
+    <ion-card-content>
+  <form class="list-form" [formGroup]="formUser" (ngSubmit)="validate()">
+    <ion-item class="animated fadeInUp">
+      <ion-label><ion-icon name="body"></ion-icon> Selectionner un role</ion-label>
+      <ion-select placeholder="Role" color="generale" formControlName="role">
+        <ion-select-option *ngFor="let role of roles" value="{{role.id}}">{{role.libelle}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item class="animated fadeInUp">
+      <ion-label position="floating">
+        <ion-icon name="person"></ion-icon>
+        Nom de compte
+      </ion-label>
+      <ion-input type="text" formControlName="username"
+                 color="generale"></ion-input>
+    </ion-item>
+
+    <div class="ion-padding">
+      <ion-button expand="block" fill="outline" (click)="validate()" [disabled]="!formUser.valid" >Valider</ion-button>
+    </div>
+  </form>
+  </ion-card-content>
+  </ion-card>
+
+  <ion-card id="recap" *ngIf="utilisateur">
+    <ion-card-header>
+      <ion-card-subtitle>Veuillez conserver les informations de connexion suivantes (le mot de passe sera changé lors de la première connexion)</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+    <ion-item><ion-label>Nom de compte: {{utilisateur.username}}</ion-label></ion-item>
+    <ion-item><ion-label>Password: {{utilisateur.password}}</ion-label></ion-item>
+    <ion-item><ion-label>Role: {{utilisateur.role.libelle}}</ion-label></ion-item>
+      <ion-toolbar><ion-button slot="end" fill="outline" size="small" color="success" (click)="add()">Nouvel utilisateur</ion-button></ion-toolbar>
+    </ion-card-content>
+  </ion-card>
+
+
+</ion-content>

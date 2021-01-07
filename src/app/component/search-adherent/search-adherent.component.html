@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Recherche Adhérent</ion-title>
+  <ion-buttons slot="end">
+    <ion-button color="danger" (click)="close()">
+      <ion-icon name="close"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-toolbar>
+      <ion-searchbar mode="ios" search-icon="search-sharp" showCancelButton="always" placeholder="Nom Prénom " (ionChange)="onChange($event)"></ion-searchbar>
+      </ion-toolbar>
+    </ion-card-header>
+
+    <ion-card-content *ngIf="load" style="text-align: center">
+      <ion-label >
+        Recherche en cours
+      </ion-label>
+      <ion-progress-bar type="indeterminate"></ion-progress-bar>
+    </ion-card-content>
+
+
+    <ion-card-content *ngIf="!load" style="text-align: center">
+      <ion-label *ngIf="adherents.length === 0"> Aucune résultat</ion-label>
+
+      <ion-list *ngFor="let adherent of adherents">
+        <ion-item button (click)="selectAdherent(adherent)">{{adherent.genre}} - {{adherent.nom}} {{adherent.prenom}} - {{this.datepipe.transform(adherent.date_naissance, 'dd/MM/yyyy')}} - {{adherent.commune}}</ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
+

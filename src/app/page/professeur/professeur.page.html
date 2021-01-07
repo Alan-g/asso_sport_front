@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>professeur</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      <ion-label>
+        <ion-button size="small" color="primary" (click)="create()" fill="outline" >Ajouter</ion-button>
+        <ion-button size="small" color="success" (click)="update()" fill="outline" [disabled]="!profId">Modifier</ion-button>
+        <ion-button size="small" color="danger" fill="outline" (click)="delete()" [disabled]="!profId">Supprimer</ion-button>
+      </ion-label>
+    </ion-list-header>
+    <ion-radio-group [(ngModel)]="profId">
+      <ion-item *ngFor="let prof of profs">
+        <ion-label>{{prof.nom.toUpperCase()}} {{prof.prenom}}</ion-label>
+        <ion-label ><ion-icon name="call-outline"></ion-icon> {{prof.telephone === null ? "Aucun" : prof.telephone}} &nbsp;&nbsp;  <ion-icon name="mail-outline"></ion-icon> {{prof.mail === null ? "Aucun" : prof.mail}}</ion-label>
+        <ion-radio mode="ios" slot="start" value="{{prof.id}}"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+</ion-content>

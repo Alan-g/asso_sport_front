@@ -1,0 +1,146 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Inscription <ion-label>validation</ion-label></ion-title>
+    <ion-progress-bar  value="1"></ion-progress-bar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+    <ion-card-header (click)="expandItem(collapseAdherent)">
+      <ion-toolbar>
+        <ion-card-title>Adherent</ion-card-title>
+       <ion-button slot="end" fill="outline" size="small" color="primary" (click)="update('/inscription')">Modifier</ion-button>
+        <ion-buttons slot="end" *ngIf="!collapseAdherent.expanded">
+          <ion-button *ngIf="!collapseAdherent.expanded">
+            <ion-icon mode="ios" name="arrow-forward"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end" *ngIf="collapseAdherent.expanded">
+          <ion-button>
+            <ion-icon mode="ios" name="arrow-down"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+
+      </ion-toolbar>
+
+    </ion-card-header>
+
+    <ion-card-content>
+      <app-expandable [expanded]="collapseAdherent.expanded" expandHeight="500px">
+        <ion-list>
+          <ion-item><ion-label>{{adherent.genre}} {{adherent.nom}} {{adherent.prenom}}</ion-label><ion-label>Née le {{this.datepipe.transform(adherent.date_naissance, 'dd/MM/yyyy')}}</ion-label></ion-item>
+          <ion-item><ion-label>Contact: &nbsp;&nbsp;<ion-icon name="call-outline"></ion-icon> {{adherent.telephone}} &nbsp;&nbsp;&nbsp;&nbsp;<ion-icon name="mail-outline"></ion-icon> {{adherent.mail ? adherent.mail : 'aucun'}}</ion-label></ion-item>
+          <ion-item><ion-label>Adresse: {{adherent.adresse1}} {{adherent.adresse2}} {{adherent.adresse3}} {{adherent.commune}} {{adherent.code_postal}}</ion-label></ion-item>
+        </ion-list>
+      </app-expandable>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header (click)="expandItem(collapseInscription)">
+      <ion-toolbar>
+        <ion-card-title>Information Inscription</ion-card-title>
+        <ion-button slot="end" fill="outline" size="small" color="primary" (click)="update('/inscription/infos')">Modifier</ion-button>
+
+        <ion-buttons slot="end" *ngIf="!collapseInscription.expanded">
+          <ion-button *ngIf="!collapseInscription.expanded">
+            <ion-icon mode="ios" name="arrow-forward"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end" *ngIf="collapseInscription.expanded">
+          <ion-button>
+            <ion-icon mode="ios" name="arrow-down"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-card-header>
+
+    <ion-card-content>
+      <app-expandable [expanded]="collapseInscription.expanded" expandHeight="500px">
+        <ion-list>
+          <ion-item><ion-label>Année: {{inscription.annee}} </ion-label><ion-label>Montant: {{inscription.montant}}€</ion-label></ion-item>
+          <ion-item><ion-label *ngIf="inscription.date_envoi_ce">Attestation CE : {{inscription.comite_entreprise ? 'oui': 'non' }} - date d'envoie {{ inscription.date_envoi_ce ? this.datepipe.transform(inscription.date_envoi_ce, 'dd/MM/yyyy') : 'aucune'}}</ion-label>
+          <ion-label *ngIf="!inscription.date_envoi_ce">Attestation CE : {{inscription.comite_entreprise ? 'oui': 'non' }} </ion-label></ion-item>
+          <ion-item><ion-label>Règlement intérieur : {{inscription.reglement_interieur ? 'oui': 'non' }}</ion-label><ion-label>Règlement financier : {{inscription.reglement ? 'oui': 'non' }}</ion-label></ion-item>
+          <ion-item><ion-label *ngIf="inscription.questionnaire_sante === 'Négatif'">Questionnaire de santé : {{inscription.questionnaire_sante }}</ion-label><ion-label *ngIf="inscription.questionnaire_sante === 'Positif'">Questionnaire de santé : {{inscription.questionnaire_sante }} - Certificat Médical: {{inscription.certificat ? 'oui': 'non' }}</ion-label><ion-label>Enveloppe : {{inscription.enveloppe ? 'oui': 'non' }}</ion-label></ion-item>
+          <ion-item><ion-label>Autorisation Parentale : {{inscription.autorisation_parental ? 'oui': 'non' }}</ion-label><ion-label>Carte M'RA : {{inscription.cart_mra ? 'oui': 'non' }}</ion-label></ion-item>
+          <ion-item><ion-label>Essai : {{inscription.essai ? 'oui': 'non' }}</ion-label></ion-item>
+          <ion-item><ion-label>Commentaire: {{inscription.commentaire ? inscription.commentaire : 'Aucun'}}</ion-label></ion-item>
+        </ion-list>
+      </app-expandable>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header (click)="expandItem(collapseCours)">
+      <ion-toolbar>
+        <ion-card-title>Cours</ion-card-title>
+        <ion-button slot="end" fill="outline" size="small" color="primary" (click)="update('/inscription/cours')">Modifier</ion-button>
+
+        <ion-buttons slot="end" *ngIf="!collapseCours.expanded">
+          <ion-button *ngIf="!collapseCours.expanded">
+            <ion-icon mode="ios" name="arrow-forward"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end" *ngIf="collapseCours.expanded">
+          <ion-button>
+            <ion-icon mode="ios" name="arrow-down"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-card-header>
+
+    <ion-card-content>
+      <app-expandable [expanded]="collapseCours.expanded" expandHeight="500px">
+        <ion-list *ngFor="let cour of cours">
+          <ion-item>{{cour.typeCours.libelle}} - {{cour.jour}} - {{cour.heure_debut}} à {{cour.heure_fin}}</ion-item>
+        </ion-list>
+      </app-expandable>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header (click)="expandItem(collapsePaiement)">
+      <ion-toolbar>
+        <ion-card-title>Paiements</ion-card-title>
+        <ion-button slot="end" fill="outline" size="small" color="primary" (click)="update('/inscription/paiement')">Modifier</ion-button>
+
+        <ion-buttons slot="end" *ngIf="!collapsePaiement.expanded">
+          <ion-button *ngIf="!collapsePaiement.expanded">
+            <ion-icon mode="ios" name="arrow-forward"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end" *ngIf="collapsePaiement.expanded">
+          <ion-button>
+            <ion-icon mode="ios" name="arrow-down"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-card-header>
+
+    <ion-card-content>
+      <app-expandable [expanded]="collapsePaiement.expanded" expandHeight="500px">
+        <ion-list *ngFor="let paiement of paiements">
+          <ion-item>Payeur: {{paiement.nom_payeur}} - Banque: {{paiement.banque}} - Montant: {{paiement.montant}} € - Date encaissement: {{this.datepipe.transform(paiement.dateEncaissement, 'dd/MM/yyyy')}} -  Numéros chéque: {{paiement.numeroCheque}}</ion-item>
+        </ion-list>
+      </app-expandable>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button  fill="outline" color="primary" (click)="previous()">Précédent</ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button  fill="outline" color="success" (click)="validate()">Valider</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

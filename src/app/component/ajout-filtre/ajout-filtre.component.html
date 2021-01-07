@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Filtre</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="danger" (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card>
+
+    <ion-card-header>
+      <ion-row>
+        <ion-col size="6">
+      <ion-select placeholder="Selectionner filtre" [(ngModel)]="filtre">
+        <ion-select-option value="certificat">Certificat</ion-select-option>
+        <ion-select-option value="enveloppe">Enveloppe</ion-select-option>
+        <ion-select-option value="reglement">Règlement Financier</ion-select-option>
+        <ion-select-option value="comite_entreprise">Comite Entreprise</ion-select-option>
+        <ion-select-option value="autorisation_parental">Autorisation Parental</ion-select-option>
+        <ion-select-option value="questionnaire_sante">Questionnaire Sante</ion-select-option>
+        <ion-select-option value="reglement_interieur">Règlement Interieur</ion-select-option>
+        <ion-select-option value="essai">Essai</ion-select-option>
+        <ion-select-option value="cart_mra">Carte M'ra</ion-select-option>
+        <ion-select-option value="cours">Cours</ion-select-option>
+      </ion-select>
+        </ion-col>
+        <ion-col size="6">
+        <ion-select placeholder="Selectionner une valeur" [(ngModel)]="valeur" *ngIf="filtre !== 'questionnaire_sante' && filtre !== 'cours'">
+        <ion-select-option value="oui">Oui</ion-select-option>
+        <ion-select-option value="non">Non</ion-select-option>
+      </ion-select>
+          <ion-select placeholder="Selectionner une valeur" [(ngModel)]="valeur" *ngIf="filtre === 'questionnaire_sante'">
+            <ion-select-option value="Positif">Positif</ion-select-option>
+            <ion-select-option value="Négatif">Négatif</ion-select-option>
+          </ion-select>
+          <ion-select [interfaceOptions]="customActionSheetOptions" placeholder="Selectionner une valeur" [(ngModel)]="valeur" *ngIf="filtre === 'cours'">
+            <ion-select-option *ngFor="let cour of cours" value="{{cour.id}}">{{cour.jour}} - {{cour.typeCours.libelle}} de {{cour.heure_debut}} à {{cour.heure_fin}}</ion-select-option>
+          </ion-select>
+        </ion-col>
+      <ion-button fill="outline" size="small" color="success" (click)="ajoutFiltre()">Ajouter</ion-button>
+      </ion-row>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-item *ngFor="let filtre of filtres">
+        <ion-label *ngIf="filtre.filtre !== 'cours'">{{convert(filtre.filtre)}} est à {{filtre.valeur}}</ion-label>
+        <ion-label *ngIf="filtre.filtre === 'cours'">{{convert(filtre.filtre)}}: {{affichageCours(filtre.valeur)}}</ion-label>
+        <ion-buttons slot="end">
+          <ion-button color="danger" (click)="delete(filtre)">
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button  fill="outline" color="primary" (click)="validate()">Valider</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

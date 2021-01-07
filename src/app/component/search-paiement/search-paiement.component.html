@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Recherche Paiement</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="danger" (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-toolbar>
+        <ion-searchbar mode="ios" search-icon="search-sharp" showCancelButton="always" placeholder="Nom payeur" (ionChange)="onChange($event)"></ion-searchbar>
+      </ion-toolbar>
+    </ion-card-header>
+    <ion-card-content *ngIf="load" style="text-align: center">
+      <ion-label >
+        Recherche en cours
+      </ion-label>
+      <ion-progress-bar type="indeterminate"></ion-progress-bar>
+    </ion-card-content>
+
+
+    <ion-card-content *ngIf="!load" style="text-align: center">
+      <ion-label *ngIf="paiements.length === 0"> Aucune résultat</ion-label>
+      <ion-list *ngFor="let paiement of paiements">
+        <ion-item button (click)="selectPaiement(paiement)">{{paiement.nom_payeur}} -  {{paiement.banque}} - {{paiement.montant}}€ - {{this.datepipe.transform(paiement.dateEncaissement, 'dd/MM/yyyy')}} -  {{paiement.numeroCheque}}</ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

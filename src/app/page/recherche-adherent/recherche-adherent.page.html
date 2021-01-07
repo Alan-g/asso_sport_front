@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Recherche d'Adherent</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-toolbar><ion-searchbar mode="ios" search-icon="search-sharp" showCancelButton="always" placeholder="Nom Prénom" (ionChange)="searchAdherent($event)"></ion-searchbar>
+      </ion-toolbar>
+    </ion-card-header>
+
+    <ion-card-content *ngIf="load" style="text-align: center">
+      <ion-label >
+        Recherche en cours
+      </ion-label>
+      <ion-progress-bar type="indeterminate"></ion-progress-bar>
+    </ion-card-content>
+
+    <ion-card-content *ngIf="!load" style="text-align: center">
+      <ion-label *ngIf="adherents.length === 0 && load === false"> Aucune résultat</ion-label>
+
+        <ion-row *ngIf="adherents.length !== 0">
+        <ion-col size="1">Genre</ion-col>
+        <ion-col size="2">Nom</ion-col>
+        <ion-col size="2">Prénom</ion-col>
+        <ion-col size="2">Commune</ion-col>
+        <ion-col size="3">Mail</ion-col>
+        <ion-col size="2">Téléphone</ion-col>
+      </ion-row>
+      <ion-row *ngFor="let adherent of adherents" (click)="click(adherent.id)" class="ion-activatable ripple-parent">
+        <ion-ripple-effect></ion-ripple-effect>
+        <ion-col size="1">{{adherent.genre}}</ion-col>
+        <ion-col size="2">{{adherent.nom}}</ion-col>
+        <ion-col size="2">{{adherent.prenom}}</ion-col>
+        <ion-col size="2">{{adherent.commune}}</ion-col>
+        <ion-col size="3">{{adherent.mail}}</ion-col>
+        <ion-col size="2">{{adherent.telephone}}</ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

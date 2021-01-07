@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Gestion des Rôles</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Rôle : </ion-label>
+      <ion-button size="small" color="success" fill="outline" (click)="add()">Ajouter</ion-button>
+    </ion-list-header>
+    <ion-item *ngFor="let role of roles">
+        <ion-label>{{role.libelle}} </ion-label>
+      <ion-buttons *ngIf="role.libelle != 'Administrateur'" slot="end">
+        <ion-button color="danger" (click)="delete(role.id)">
+          <ion-icon name="close"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-list>
+</ion-content>

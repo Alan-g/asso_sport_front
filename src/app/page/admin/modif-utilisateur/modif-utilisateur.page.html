@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Modification Utilisateur </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="this.user">
+
+  <ion-card id="creation">
+    <ion-card-content>
+      <form class="list-form" [formGroup]="formUser" (ngSubmit)="save()">
+        <ion-item class="animated fadeInUp">
+          <ion-label><ion-icon name="body"></ion-icon> Selectionner un role</ion-label>
+          <ion-select placeholder="Role" color="generale" formControlName="role">
+            <ion-select-option *ngFor="let role of roles" value="{{role.id}}">{{role.libelle}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-label position="floating">
+            <ion-icon name="person"></ion-icon>
+            Nom de compte
+          </ion-label>
+          <ion-input type="text" formControlName="username"
+                     color="generale"></ion-input>
+        </ion-item>
+
+        <div class="ion-padding">
+          <ion-button fill="outline" color="success" (click)="save()" [disabled]="!formUser.valid || (this.user.role.id === this.formUser.value.role && this.user.username === this.formUser.value.username)" >Sauvegarder</ion-button>
+          <ion-button fill="outline" (click)="resetPassword()" >Reset Password</ion-button>
+        </div>
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

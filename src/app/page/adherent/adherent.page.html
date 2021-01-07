@@ -1,0 +1,191 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/adherent/recherche"></ion-back-button>
+    </ion-buttons>
+    <ion-title>adherent</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-toolbar>
+        <ion-title>Information</ion-title>
+        <ion-buttons *ngIf="canUpdate()" (click)="changeMode()" slot="end">
+          <ion-button slot="end"><ion-icon mode="ios" name="pencil-outline"></ion-icon></ion-button>
+        </ion-buttons>
+
+      </ion-toolbar>
+    </ion-card-header>
+
+    <ion-card-content *ngIf="adherent">
+      <form class="list-form" [formGroup]="formAdherent" (ngSubmit)="validate()">
+        <ion-item class="animated fadeInUp" [class.customDisable]="!update" >
+          <ion-label><ion-icon name="body"></ion-icon>Genre</ion-label>
+          <ion-select   placeholder="Genre" color="generale" formControlName="genre">
+            <ion-select-option value="MR">MR</ion-select-option>
+            <ion-select-option value="MME">MME</ion-select-option>
+            <ion-select-option value="Enfant">Enfant</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp" [class.customDisable]="!update">
+          <ion-label position="floating">
+            <ion-icon name="person"></ion-icon>
+            Nom
+          </ion-label>
+          <ion-input  type="text" formControlName="nom"
+                     color="generale"></ion-input>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp" [class.customDisable]="!update">
+          <ion-label position="floating">
+            <ion-icon name="person"></ion-icon>
+            Prénom
+          </ion-label>
+          <ion-input type="text" formControlName="prenom"
+                     color="generale"></ion-input>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp" [class.customDisable]="!update">
+          <ion-label position="floating">
+            <ion-icon name="calendar"></ion-icon>
+            Date de naissance
+          </ion-label>
+          <ion-datetime formControlName="dateNaissance" display-format="DD-MM-YYYY" placeholder="Select Date"></ion-datetime>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp" [class.customDisable]="!update">
+          <ion-label position="floating">
+            <ion-icon name="phone-portrait"></ion-icon>
+            Téléphone
+          </ion-label>
+          <ion-input type="tel" formControlName="telephone"
+                     color="generale"></ion-input>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp" [class.customDisable]="!update">
+          <ion-label position="floating">
+            <ion-icon name="mail"></ion-icon>
+            Mail
+          </ion-label>
+          <ion-input type="mail" formControlName="mail"
+                     color="generale"></ion-input>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp" [class.customDisable]="!update">
+          <ion-label position="floating">
+            <ion-icon name="location"></ion-icon>
+            Adresse 1
+          </ion-label>
+          <ion-input type="text" formControlName="adresse1"
+                     color="generale"></ion-input>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp" [class.customDisable]="!update">
+          <ion-label position="floating">
+            <ion-icon name="location"></ion-icon>
+            Adresse 2
+          </ion-label>
+          <ion-input type="text" formControlName="adresse2"
+                     color="generale"></ion-input>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp" [class.customDisable]="!update">
+          <ion-label position="floating">
+            <ion-icon name="location"></ion-icon>
+            Adresse 3
+          </ion-label>
+          <ion-input type="text" formControlName="adresse3"
+                     color="generale"></ion-input>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp" [class.customDisable]="!update">
+          <ion-label position="floating">
+            <ion-icon name="locate"></ion-icon>
+            Code Postal
+          </ion-label>
+          <ion-input type="text" formControlName="codePostal"
+                     color="generale"></ion-input>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp" [class.customDisable]="!update">
+          <ion-label position="floating">
+            <ion-icon name="navigate"></ion-icon>
+            Commune
+          </ion-label>
+          <ion-input type="text" formControlName="commune"
+                     color="generale"></ion-input>
+        </ion-item>
+
+        <div class="ion-padding" *ngIf="update">
+          <ion-button slot="start" fill="outline" color="danger" (click)="cancel()" >Annuler</ion-button>
+          <ion-button slot="end" fill="outline" color="success" (click)="validate()" [disabled]="!formAdherent.valid" >Sauvegarder</ion-button>
+        </div>
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-toolbar>
+        <ion-select slot="end" style="max-width: 200px;" (ionChange)="onChange()" placeholder="Selectionner une année" [(ngModel)]="anneeSelect">
+        <ion-select-option *ngFor="let annee of annees" value="{{annee.libelle}}">{{annee.libelle}}</ion-select-option>
+      </ion-select>
+        <ion-title>Inscriptions</ion-title>
+      </ion-toolbar>
+    </ion-card-header>
+    <ion-card-content *ngIf="!haveInscription()" style="text-align: center">
+      <ion-label >Pas d'inscription</ion-label>
+    </ion-card-content>
+    <ion-card-content *ngIf="haveInscription()">
+    <ion-grid *ngFor="let inscription of inscriptions">
+      <div *ngIf="inscription.annee === anneeSelect">
+      <ion-row>
+        <ion-col size="2"><ion-label><strong>Essai:</strong> {{inscription.essai == true ? 'oui': 'non' }}</ion-label></ion-col>
+        <ion-col size="2"><ion-label><strong>Règlement intérieur:</strong> {{inscription.reglement_interieur == true ? 'oui': 'non' }}</ion-label></ion-col>
+        <ion-col size="4"><ion-label  *ngIf="inscription.date_envoi_ce"><strong>Attestation CE:</strong> {{inscription.comite_entreprise  == true? 'oui': 'non' }} - <strong>date d'envoie</strong> {{ inscription.date_envoi_ce ? this.datepipe.transform(inscription.date_envoi_ce, 'dd/MM/yyyy') : 'aucune'}}</ion-label>
+          <ion-label *ngIf="!inscription.date_envoi_ce"><strong>Attestation CE:</strong> {{inscription.comite_entreprise == true ? 'oui': 'non' }}</ion-label>
+        </ion-col>
+        <ion-col size="4"><ion-label *ngIf="inscription.questionnaire_sante === 'Négatif'"><strong>Questionnaire de santé:</strong> {{inscription.questionnaire_sante }}</ion-label>
+          <ion-label *ngIf="inscription.questionnaire_sante === 'Positif'"><strong>Questionnaire de santé:</strong> {{inscription.questionnaire_sante }} - <strong>Certificat Médical:</strong> {{inscription.certificat ? 'oui': 'non' }}</ion-label></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="2"><ion-label><strong>Enveloppe:</strong> {{inscription.enveloppe ? 'oui': 'non' }}</ion-label></ion-col>
+        <ion-col size="2"><ion-label><strong>Autorisation Parentale:</strong> {{inscription.autorisation_parental == true ? 'oui': 'non' }}</ion-label></ion-col>
+        <ion-col size="2"><ion-label><strong>Carte M'RA:</strong> {{inscription.cart_mra == true ? 'oui': 'non' }}</ion-label></ion-col>
+      </ion-row>
+
+      <ion-row>
+      <ion-col size="2"><ion-label><strong>Montant:</strong> {{inscription.montant}}€</ion-label></ion-col>
+      <ion-col size="2"><ion-label><strong>Règlement financier:</strong> {{inscription.reglement == true ? 'oui': 'non' }}</ion-label></ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12"><ion-label><strong>Commentaire:</strong> {{inscription.commentaire ? inscription.commentaire : 'Aucun'}}</ion-label></ion-col>
+      </ion-row>
+        <ion-row>
+          <ion-col size="6" offset="5" ><ion-title>Cours</ion-title></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col *ngIf="cours.length === 0" size="6" offset="5" ><ion-label>Aucun cours</ion-label></ion-col>
+          <ion-col size="4" *ngFor="let cour of cours"><strong>{{cour.typeCours.libelle}}</strong> - {{cour.jour}} - {{cour.heure_debut}} à {{cour.heure_fin}}</ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="6" offset="5" ><ion-title>Paiement</ion-title></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col *ngIf="paiements.length === 0" size="6" offset="5" ><ion-label>Aucun paiement</ion-label></ion-col>
+          <ion-col size="7" *ngFor="let paiement of paiements"><strong>Payeur:</strong> {{paiement.nom_payeur}} - <strong>Banque:</strong> {{paiement.banque}} - <strong>Montant:</strong> {{paiement.montant}} € - <strong>Date encaissement:</strong> {{this.datepipe.transform(paiement.dateEncaissement, 'dd/MM/yyyy')}} -  <strong>Numéros chéque:</strong> {{paiement.numeroCheque}}</ion-col>
+        </ion-row>
+
+      </div>
+    </ion-grid>
+
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Gestion Saison</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header><ion-card-title>Saison :</ion-card-title></ion-card-header>
+    <ion-card-content>
+      <ion-item *ngFor="let annee of annees">{{annee.libelle}}<ion-badge *ngIf="annee.actif" color="success" slot="end">Actif</ion-badge></ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+    <ion-card-title>Ajout Saison Active</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form class="list-form" [formGroup]="formSaison" (ngSubmit)="validate()">
+      <ion-item class="animated fadeInUp">
+        <ion-label position="floating">
+          Année début
+        </ion-label>
+        <ion-input type="number" formControlName="anneeDebut" color="generale"></ion-input>
+      </ion-item>
+        <ion-item class="animated fadeInUp">
+          <ion-label position="floating">
+            Année Fin
+          </ion-label>
+          <ion-input type="number" formControlName="anneeFin" color="generale"></ion-input>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-label position="floating">Copie des professeurs</ion-label>
+        <ion-select placeholder="Selectionner les professeurs" multiple="true" formControlName="profs">
+        <ion-select-option *ngFor="let prof of profs" value="{{prof.id}}">{{prof.nom.toUpperCase()}} {{prof.prenom}}</ion-select-option>
+        </ion-select>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-label position="floating">Copie des cours</ion-label>
+          <ion-select placeholder="Selectionner les cours" multiple="true" formControlName="cours" [interfaceOptions]="customActionSheetOptions">
+            <ion-select-option *ngFor="let cour of cours" value="{{cour.id}}">{{cour.typeCours.libelle}} - {{cour.jour}} - {{cour.heure_debut}} à {{cour.heure_fin}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <div class="ion-padding">
+          <ion-button expand="block" fill="outline" (click)="validate()" [disabled]="!formSaison.valid" >Créer</ion-button>
+        </div>
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

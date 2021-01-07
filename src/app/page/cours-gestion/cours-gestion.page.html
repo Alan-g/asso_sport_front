@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>cours</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      <ion-label>
+        <ion-button size="small" color="primary" (click)="create()" fill="outline" >Ajouter</ion-button>
+        <ion-button size="small" color="success" (click)="update()" fill="outline" [disabled]="!coursId">Modifier</ion-button>
+        <ion-button size="small" color="danger" fill="outline" (click)="delete()" [disabled]="!coursId">Supprimer</ion-button>
+      </ion-label>
+    </ion-list-header>
+    <ion-radio-group [(ngModel)]="coursId">
+      <ion-item *ngFor="let cour of cours">
+        <ion-label>{{cour.jour}} - {{cour.heure_debut}} à {{cour.heure_fin}} - {{cour.typeCours.libelle}} - Limite: {{cour.limite}} - Salle: {{cour.salle !== null ? cour.salle.libelle : 'Aucune'}} - Professeur: {{cour.prof.nom.toUpperCase()}} {{cour.prof.prenom}} </ion-label>
+        <ion-radio mode="ios" slot="start" value="{{cour.id}}"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+</ion-content>

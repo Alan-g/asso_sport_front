@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Paramètre</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-title>Information Compte</ion-title>
+    </ion-card-header>
+
+    <ion-card-content *ngIf="account">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="4">
+            <ion-label>
+              <strong>Nom de compte :</strong> {{account.username}}
+            </ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-label><strong>Role :</strong> &nbsp;&nbsp;{{account.role.libelle}}</ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-title>Changement mot de passe</ion-title>
+    </ion-card-header>
+    <ion-card-content>
+      <form class="list-form" [formGroup]="formPassword" (ngSubmit)="validate()">
+
+        <ion-item class="animated fadeInUp">
+          <ion-label position="floating">
+            Ancien mot de passe
+          </ion-label>
+          <ion-input  type="password" formControlName="oldPassword"
+                      color="generale"></ion-input>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-label position="floating">
+            Nouveau mot de passe
+          </ion-label>
+          <ion-input  type="password" formControlName="newPassword"
+                      color="generale"></ion-input>
+        </ion-item>
+
+        <ion-item class="animated fadeInUp">
+          <ion-label position="floating">
+            Vérification nouveau mot de passe
+          </ion-label>
+          <ion-input  type="password" formControlName="newPasswordCheck"
+                      color="generale"></ion-input>
+        </ion-item>
+
+        <div class="ion-padding">
+          <ion-button expand="block" fill="outline" (click)="validate()" [disabled]="!formPassword.valid" >Changer de mot de passe</ion-button>
+        </div>
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

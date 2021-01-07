@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  <ion-title>Inscription <ion-label>étape 3/4</ion-label></ion-title>
+  <ion-progress-bar  value="0.5"></ion-progress-bar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid id="cours_question">
+    <ion-row class="ion-align-self-center" style="padding-top: 30vh;">
+      <ion-col offset="5" size="2" style="text-align: center">
+        <ion-label>Voulez vous ajouter des cours ?</ion-label>
+        <br><ion-button color="primary" fill="outline" (click)="addCours()">Oui</ion-button> <ion-button color="primary" fill="outline" (click)="skip()">Non</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-card id="cours" style="display: none">
+    <ion-card-header>
+      <form class="list-form" [formGroup]="formCours" (ngSubmit)="add()">
+        <ion-item class="animated fadeInUp">
+          <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet" multiple="true" placeholder="Selectionner un Cours" color="generale" formControlName="cours">
+          <ion-select-option *ngFor="let cours of coursListe" value="{{cours.id}}">{{cours.typeCours.libelle}} - {{cours.jour}} - {{cours.heure_debut}} à {{cours.heure_fin}} - {{cours.effectif}} / {{cours.limite}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div class="ion-padding">
+          <ion-button expand="block" fill="outline" color="success" (click)="add()" [disabled]="!formCours.valid" >Ajouter</ion-button>
+        </div>
+
+      </form>
+    </ion-card-header>
+    <ion-card-content style="text-align: center">
+      <ion-item style="max-width: 20%">
+        <ion-label>
+          <ion-icon name="wallet"></ion-icon>
+          Montant (€):
+        </ion-label>
+        <ion-input type="number" id="montant" [(ngModel)]="montant" value="0"
+                   color="generale"></ion-input>
+      </ion-item>
+      <ion-label *ngIf="coursSelect.length === 0">Aucun cours sélectionné</ion-label>
+      <ion-label *ngIf="coursSelect.length !== 0">Cours</ion-label>
+      <ion-list *ngFor="let cours of coursSelect">
+        <ion-item>{{cours.typeCours.libelle}} - {{cours.jour}} - {{cours.heure_debut}} à {{cours.heure_fin}} - {{cours.effectif}} / {{cours.limite}}
+          <ion-button slot="end" color="danger" (click)="remove(cours)">
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+<ion-footer id="footer" style="display: none">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button  fill="outline" color="primary" (click)="previous()">Précédent</ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button  fill="outline" color="primary" (click)="skip()">Suivant</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
